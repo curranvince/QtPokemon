@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/txt">
+        <file>map.txt</file>
+        <file>pokemon.txt</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file>pokemon_trainer.png</file>
+    </qresource>
+</RCC>
