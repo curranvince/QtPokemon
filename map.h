@@ -14,9 +14,9 @@ private:
 public:
     Map();
 
-    Type GetTileType(Position pos) { return tiles_.at(pos)->GetType(); }
     std::vector<Tile*> GetAllTiles();
 
+    bool CheckAdjTileValid(Position pos, Direction direction);
 };
 
 #endif // MAP_H

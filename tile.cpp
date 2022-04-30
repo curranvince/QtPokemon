@@ -2,6 +2,25 @@
 
 #include <QtWidgets>
 
+QPixmap *Tile::kSpriteImage = nullptr;
+
+Tile::Tile(enum Type nType, Position nPos) : kType(nType), kPos(nPos) {
+    switch (nType) {
+        case Type::kLand:
+            kSpriteOffset = 0;
+            break;
+        case Type::kWater:
+            kSpriteOffset = TILE_WIDTH;
+            break;
+        case Type::kPokeCenter:
+            kSpriteOffset = TILE_WIDTH*2;
+            break;
+        case Type::kPokeGym:
+            kSpriteOffset = TILE_WIDTH*3;
+            break;
+    }
+}
+
 // set Tile position
 QRectF Tile::boundingRect() const {
     auto pos = kPos.Convert();
@@ -22,24 +41,10 @@ void Tile::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidge
     Q_UNUSED(item);
 
     auto b = painter->brush();
-    // tiles are red or black
-    switch (kType) {
-        case (Type::kLand):
-            painter->setBrush(QBrush(QColor(0,255,0))); // green
-            break;
-        case (Type::kWater):
-            painter->setBrush(QBrush(QColor(0,0,255))); // blue
-            break;
-        case (Type::kPokeCenter):
-            painter->setBrush(QBrush(QColor(255,0,0)));  // red
-            break;
-        case (Type::kPokeGym):
-            painter->setBrush(QBrush(QColor(255,102,0))); // orange
-            break;
-    }
 
-    auto pos = ConvertPosition();
+    auto pos = kPos.Convert();
 
-    painter->drawRect(pos.x_, pos.y_, kWidth, kWidth);
+    painter->drawPixmap(pos.x_, pos.y_, *kSpriteImage, kSpriteOffset, 0, TILE_WIDTH, TILE_WIDTH);
+
     painter->setBrush(b);
 }

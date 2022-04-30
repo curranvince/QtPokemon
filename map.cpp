@@ -15,6 +15,8 @@ Map::Map()
         exit(-1);
     }
 
+    Tile::InitializePixmap();
+
     Type type = Type::kLand;
     int row, col;
     row = col = 0;
@@ -62,5 +64,28 @@ std::vector<Tile*> Map::GetAllTiles() {
     }
 
     return tiles;
+}
+
+bool Map::CheckAdjTileValid(Position pos, Direction dir) {
+    Position adjPos = pos;
+    switch (dir) {
+        case Direction::kSouth:
+            adjPos.y_ += 1;
+            break;
+        case Direction::kNorth:
+            adjPos.y_ -= 1;
+            break;
+        case Direction::kEast:
+            adjPos.x_ += 1;
+            break;
+        case Direction::kWest:
+            adjPos.x_ -= 1;
+            break;
+    }
+
+    if (adjPos.x_ < 0 || adjPos.y_ < 0 || adjPos.x_ > 15 || adjPos.y_ > 24)
+        return false;
+
+    return tiles_.at(adjPos)->GetType() != Type::kWater;
 }
 

@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "gamemanager.h"
+#include <QKeyEvent>
+
+#include "player.h"
+#include "pokemondatabase.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     for (Tile* t : map_->GetAllTiles()) {
         scene_->addItem(t);
     }
+
+    player_ = new Player(PokemonDatabase::Instance().CreatePokemon(1));
+    scene_->addItem(player_);
 }
 
 MainWindow::~MainWindow()
@@ -28,3 +34,23 @@ MainWindow::~MainWindow()
     delete ui_;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+    Direction dir;
+    switch (event->key()) {
+        case Qt::Key_W:
+            dir = Direction::kNorth;
+            break;
+        case Qt::Key_A:
+            dir = Direction::kWest;
+            break;
+        case Qt::Key_S:
+            dir = Direction::kSouth;
+            break;
+        case Qt::Key_D:
+            dir = Direction::kEast;
+            break;
+    }
+
+    if (map_->CheckAdjTileValid(player_->GetPosition(), dir))
+        player_->Move(dir);
+}

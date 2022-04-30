@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 
 #include "map.h"
+#include "player.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,9 +15,6 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
 
 private:
     // mainwindow must have the ui and scene so we can access buttons and draw the game
@@ -24,6 +22,14 @@ private:
     QGraphicsScene *scene_;
 
     Map *map_;
+    Player *player_;
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
 
 };
 

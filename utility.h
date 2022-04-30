@@ -5,6 +5,13 @@
 
 #define TILE_WIDTH 35
 
+enum class Direction {
+    kNorth,
+    kEast,
+    kSouth,
+    kWest,
+};
+
 struct Position {
     int x_;
     int y_;

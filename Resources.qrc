@@ -4,6 +4,7 @@
         <file>pokemon.txt</file>
     </qresource>
     <qresource prefix="/img">
-        <file>pokemon_trainer.png</file>
+        <file>player_35.png</file>
+        <file>tiles.png</file>
     </qresource>
 </RCC>
