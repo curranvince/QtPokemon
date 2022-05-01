@@ -9,6 +9,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    character.cpp \
+    combatwindow.cpp \
+    gamemanager.cpp \
     main.cpp \
     mainwindow.cpp \
     map.cpp \
@@ -16,18 +19,24 @@ SOURCES += \
     pokemon.cpp \
     pokemondatabase.cpp \
     tile.cpp \
+    trainer.cpp \
     utility.cpp
 
 HEADERS += \
+    character.h \
+    combatwindow.h \
+    gamemanager.h \
     mainwindow.h \
     map.h \
     player.h \
     pokemon.h \
     pokemondatabase.h \
     tile.h \
+    trainer.h \
     utility.h
 
 FORMS += \
+    combatwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.

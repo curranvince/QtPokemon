@@ -23,22 +23,36 @@ private:
     bool moving_;
 
     Pokemon* activePokemon_;
-    Pokemon* party_[6];
+
+    std::vector<Pokemon*>  party_;
     std::vector<Pokemon*> pokedex_;
 
     Position pos_;
-    int pokeballs_;
 
     // necessary Qt bounding and drawing methods
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
 public:
+    int pokeballs_;
+    int badges_;
+
     Player(Pokemon* starter);
 
     Position GetPosition() { return pos_; }
+    std::vector<Pokemon*> GetParty() { return party_; }
+    Pokemon* GetActive() { return activePokemon_; }
 
-    void Move(Direction direction);
+    bool NextPokemon();
+
+    void AddPokemon(Pokemon* pokemon);
+    void SetActive(int index);
+    void BeatGym() { badges_++; }
+
+    void Move(Direction dir);
+    void Move(Position pos);
+
+    void HealAll();
 
 };
 

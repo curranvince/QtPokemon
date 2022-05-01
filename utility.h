@@ -6,6 +6,7 @@
 #define TILE_WIDTH 35
 
 enum class Direction {
+    NONE,
     kNorth,
     kEast,
     kSouth,
@@ -33,6 +34,10 @@ struct Position {
 
     bool operator==(const Position &other) const {
         return (this->x_ == other.x_ && this->y_ == other.y_);
+    }
+
+    bool operator!=(const Position &other) const {
+        return (this->x_ != other.x_ || this->y_ != other.y_);
     }
 
     Position Convert() const { return Position{x_*TILE_WIDTH, y_*TILE_WIDTH}; }

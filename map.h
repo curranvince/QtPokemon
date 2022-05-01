@@ -17,6 +17,9 @@ public:
     std::vector<Tile*> GetAllTiles();
 
     bool CheckAdjTileValid(Position pos, Direction direction);
+    Type CheckTileType(Position pos) { return tiles_.at(pos)->GetType(); }
+
+    Position FindNearest(Position pos, Type type);
 };
 
 #endif // MAP_H

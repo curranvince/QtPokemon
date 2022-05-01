@@ -36,7 +36,8 @@ public:
      * https://www.qtcentre.org/threads/34461-Runtime-error-when-initializing-static-const-member-QPixmap */
     static void InitializePixmap() { kSpriteImage = new QPixmap(":/img/tiles.png"); }
 
-    enum Type GetType() { return kType; }
+    enum Type GetType() const { return kType; }
+    Position GetPosition() const { return kPos; }
 
     // necessary Qt bounding and drawing methods
     QRectF boundingRect() const override;

@@ -69,6 +69,8 @@ std::vector<Tile*> Map::GetAllTiles() {
 bool Map::CheckAdjTileValid(Position pos, Direction dir) {
     Position adjPos = pos;
     switch (dir) {
+        case Direction::NONE:
+            break;
         case Direction::kSouth:
             adjPos.y_ += 1;
             break;
@@ -89,3 +91,20 @@ bool Map::CheckAdjTileValid(Position pos, Direction dir) {
     return tiles_.at(adjPos)->GetType() != Type::kWater;
 }
 
+/* using distance formula to find the nearest tile of a certain type */
+Position Map::FindNearest(Position pos, Type type) {
+    qDebug() << "Made it to FindNearest";
+    int min_dist = INT_MAX;
+    Position closest_pos(-1,-1);
+    for (auto& t : tiles_) {
+        if (t.second->GetType() == type) {
+            float dist = std::sqrt(std::pow((t.first.x_-pos.x_), 2) + std::pow((t.first.y_-pos.y_), 2));
+            if (dist < min_dist) {
+                min_dist = dist;
+                closest_pos = t.first;
+            }
+        }
+    }
+    qDebug() << "Found Nearest Tile of type";
+    return closest_pos;
+}
