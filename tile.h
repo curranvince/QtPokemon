@@ -8,6 +8,7 @@
 
 #include "utility.h"
 
+/* tileset: https://www.deviantart.com/chaoticcherrycake/art/Pokemon-Tileset-From-Public-Tiles-32x32-623246343 */
 enum class Type {
     kLand,
     kWater,

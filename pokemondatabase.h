@@ -34,8 +34,8 @@ public:
     PokemonDatabase(PokemonDatabase const&) = delete;
     void operator=(PokemonDatabase const&)  = delete;
 
-    Pokemon* CreatePokemon(int id) { return new Pokemon(id, pokemon[id-1]->name_, pokemon[id-1]->hp_, pokemon[id-1]->attack_, pokemon[id-1]->defense_, pokemon[id-1]->speed_, pokemon[id-1]->maxAD_, pokemon[id-1]->type1_, pokemon[id-1]->type2_); }
-    Pokemon* CreateRandomPokemon() { return CreatePokemon(Utility::Instance().GetRandom(1, NUM_POKEMON)); }
+    Pokemon* CreatePokemon(int id) const { return new Pokemon(id, pokemon[id-1]->name_, pokemon[id-1]->hp_, pokemon[id-1]->attack_, pokemon[id-1]->defense_, pokemon[id-1]->speed_, pokemon[id-1]->maxAD_, pokemon[id-1]->type1_, pokemon[id-1]->type2_); }
+    Pokemon* CreateRandomPokemon() const { return CreatePokemon(Utility::Instance().GetRandom(1, NUM_POKEMON)); }
 };
 
 #endif // POKEMONDATABASE_H

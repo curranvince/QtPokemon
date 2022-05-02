@@ -1,6 +1,8 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include <QDebug>
+
 #include <random>
 
 #define TILE_WIDTH 35
@@ -40,7 +42,9 @@ struct Position {
         return (this->x_ != other.x_ || this->y_ != other.y_);
     }
 
-    Position Convert() const { return Position{x_*TILE_WIDTH, y_*TILE_WIDTH}; }
+    Position Convert() const {
+        return Position{x_*TILE_WIDTH, y_*TILE_WIDTH};
+    }
 };
 
 class PositionHash {

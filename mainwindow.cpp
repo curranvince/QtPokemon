@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* add map & player to game view */
     gameManager_ = new GameManager();
+    connect(this, SIGNAL(EnableButtons()), gameManager_->GetCombatWindow(), SLOT(EnableButtons_slot()));
+    connect(gameManager_->GetCombatWindow(), SIGNAL(ShowPartyMenu()), this, SLOT(ShowPartyMenu_slot()));
+
     for (Tile* t : gameManager_->GetMapTiles()) { scene_->addItem(t); }
     scene_->addItem(gameManager_->GetPlayer());
 }
@@ -89,12 +92,21 @@ void MainWindow::on_quitButton2_clicked() { exit(0); }
 
 void MainWindow::on_partyBackButton_clicked() {
     partyMenu_->hide();
-    pauseMenu_->show();
+    if (gameManager_->GetCombatWindow()->battleType_ == BattleType::NONE) {
+        pauseMenu_->show();
+    } else {
+        emit EnableButtons();
+    }
 }
 
 void MainWindow::on_partyButton_clicked() {
     UpdatePartyMenu();
     pauseMenu_->hide();
+    partyMenu_->show();
+}
+
+void MainWindow::ShowPartyMenu_slot() {
+    UpdatePartyMenu();
     partyMenu_->show();
 }
 

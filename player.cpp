@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-#include <QDebug>
-
 Player::Player(Pokemon* starter) :
     QGraphicsObject(), pos_(Position(0,0)), pokeballs_(10), badges_(0)
 {

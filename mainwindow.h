@@ -17,7 +17,6 @@ class MainWindow : public QMainWindow
 
 
 private:
-    // mainwindow must have the ui and scene so we can access buttons and draw the game
     Ui::MainWindow *ui_;
     QGraphicsScene *scene_;
 
@@ -40,6 +39,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+signals:
+    void EnableButtons();
+
 private slots:
     void on_newGameButton_clicked();
     void on_quitButton_clicked();
@@ -53,6 +55,10 @@ private slots:
     void on_active4_clicked();
     void on_active5_clicked();
     void on_active6_clicked();
+
+public slots:
+    void ShowPartyMenu_slot();
+
 };
 
 #endif // MAINWINDOW_H

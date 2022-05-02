@@ -29,7 +29,6 @@ private:
 
     Position pos_;
 
-    // necessary Qt bounding and drawing methods
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 

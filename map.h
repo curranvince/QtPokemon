@@ -14,12 +14,12 @@ private:
 public:
     Map();
 
-    std::vector<Tile*> GetAllTiles();
+    std::vector<Tile*> GetAllTiles() const;
 
-    bool CheckAdjTileValid(Position pos, Direction direction);
-    Type CheckTileType(Position pos) { return tiles_.at(pos)->GetType(); }
+    bool CheckAdjTileValid(Position pos, Direction direction) const;
+    Type CheckTileType(Position pos) const { return tiles_.at(pos)->GetType(); }
 
-    Position FindNearest(Position pos, Type type);
+    Position FindNearest(Position pos, Type type) const;
 };
 
 #endif // MAP_H

@@ -19,7 +19,7 @@ public:
 
     Trainer();
 
-    Pokemon* GetActive() { return activePokemon_; }
+    Pokemon* GetActive() const { return activePokemon_; }
 
     bool NextPokemon();
 };

@@ -33,10 +33,7 @@ GameManager::GameManager() : currentBattlePos_(Position(-1, -1))
     }
 }
 
-GameManager::~GameManager()
-{
-
-}
+GameManager::~GameManager() {}
 
 void GameManager::MovePlayer(Direction dir) {
     /* move the player */
@@ -71,6 +68,8 @@ void GameManager::MovePlayer(Direction dir) {
     }
 }
 
+/* see if a wild pokemon is in range of the given position */
+/* return pokemon & its position, or nullptr if nothing found */
 std::pair<Position, Pokemon*>* GameManager::CheckForWild(Position pos) {
     for (const auto &wild : wildPokemon_) {
         if (std::abs(pos.x_ - wild.first.x_) <= 2 && std::abs(pos.y_ - wild.first.y_) <= 2) {
@@ -91,6 +90,12 @@ void GameManager::StartBattle(Trainer* trainer) {
     combatWindow_->show();
 }
 
+void GameManager::RunPokeCenter() {
+    player_->HealAll();
+    // TO DO show pokedex & allow player to swap out party
+}
+
+/* based off combat outcome: capture pokemon, get a badge, or teleport to nearest PokeCenter */
 void GameManager::CombatOver_slot(bool won) {
     if (won) {
         if (combatWindow_->battleType_ == BattleType::kWild) {
@@ -108,9 +113,4 @@ void GameManager::CombatOver_slot(bool won) {
 
     combatWindow_->battleType_ = BattleType::NONE;
     combatWindow_->hide();
-}
-
-void GameManager::RunPokeCenter() {
-    player_->HealAll();
-    // TO DO show pokedex & allow player to swap out party
 }

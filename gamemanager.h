@@ -34,11 +34,13 @@ public:
     GameManager();
     ~GameManager();
 
-    Player* GetPlayer() { return player_; }
+    Player* GetPlayer() const { return player_; }
+    std::vector<Tile*> GetMapTiles() const { return map_->GetAllTiles(); }
+    CombatWindow* GetCombatWindow() const { return combatWindow_; }
 
-    std::vector<Tile*> GetMapTiles() { return map_->GetAllTiles(); }
-    bool CheckTileValidity(Position pos, Direction dir) { return map_->CheckAdjTileValid(pos, dir); }
+    bool CheckTileValidity(Position pos, Direction dir) const { return map_->CheckAdjTileValid(pos, dir); }
     void MovePlayer(Direction dir);
+
 
 public slots:
     void CombatOver_slot(bool won);

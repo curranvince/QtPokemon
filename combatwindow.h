@@ -4,6 +4,7 @@
 #include <QFrame>
 #include <QTimer>
 
+#include "battlesprite.h"
 #include "player.h"
 #include "trainer.h"
 
@@ -23,7 +24,11 @@ class CombatWindow : public QFrame
 
 private:
     Ui::CombatWindow *ui_;
+    QGraphicsScene *scene_;
+
     QTimer *writeTimer_;
+
+    BattleSprite* battleSprites[2];
 
     Player *player_;
     Trainer *opponent_;
@@ -41,6 +46,7 @@ private:
     bool TryToCatch();
     bool DoAttack(Pokemon* attacker, Pokemon* defender); // returns true if the defender dies
 
+    void HandlePlayerFaint();
     void HandleOpponentFaint();
     void AttemptTrainerSwitch();
 
@@ -58,15 +64,23 @@ public:
 
 signals:
     void CombatOver(bool won);
+    void ShowPartyMenu();
 
 private slots:
-    void on_backButton_clicked();
+    /* main combat menu button clicks */
     void on_fightButton_clicked();
+    void on_inventoryButton_clicked();
+    void on_switchButton_clicked();
     void on_runButton_clicked();
-    void on_pokeballButton_clicked();
-    void on_fightBuinventoryButtontton_clicked();
-
+    /* attack menu button clicks */
     void on_attack1Button_clicked();
+    void on_backButton_clicked();
+    /* inventory menu button clicks */
+    void on_pokeballButton_clicked();
+
+public slots:
+    void EnableButtons_slot();
+
 };
 
 #endif // COMBATWINDOW_H

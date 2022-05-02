@@ -45,7 +45,7 @@ public:
     int GetAttackValue() const { return Utility::Instance().GetRandom(0, attack_); }
     int GetDefenseValue() const { return Utility::Instance().GetRandom(0, defense_); }
 
-    void Damage(int dmg) { hp_ -= dmg; }
+    void Damage(float dmg) { hp_ -= dmg; }
     void Heal(int amt) { hp_ = ((hp_ + amt) > maxHP_) ? maxHP_ : (hp_ + amt); } // clamp healing to max health amount
     void Heal() { hp_ = maxHP_; }
     void LevelUp();

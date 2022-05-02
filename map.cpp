@@ -8,7 +8,7 @@ Map::Map()
 {
     // read in the map file
     // at each character, create a new tile and add it to the map
-    QFile file(":/txt/map.txt");
+    QFile file(":/data/pokemap2.csv");
 
     if(!file.open(QIODevice::ReadOnly)) {
         std::cerr << "Unable to open map file, exiting\n";
@@ -28,16 +28,16 @@ Map::Map()
 
         for (unsigned int i = 0; i < line.length(); i++) {
             switch (line[i].toLatin1()) {
-                case 'p':
+                case '0':
                     type = Type::kLand;
                     break;
-                case 'w':
+                case '1':
                     type = Type::kWater;
                     break;
-                case 'C':
+                case '2':
                     type = Type::kPokeCenter;
                     break;
-                case 'G':
+                case '3':
                     type = Type::kPokeGym;
                     break;
             }
@@ -55,7 +55,7 @@ Map::Map()
 }
 
 /* Adapted from: https://stackoverflow.com/questions/8483985/obtaining-list-of-keys-and-values-from-unordered-map */
-std::vector<Tile*> Map::GetAllTiles() {
+std::vector<Tile*> Map::GetAllTiles() const {
     std::vector<Tile*> tiles;
     tiles.reserve(tiles_.size());
 
@@ -66,7 +66,7 @@ std::vector<Tile*> Map::GetAllTiles() {
     return tiles;
 }
 
-bool Map::CheckAdjTileValid(Position pos, Direction dir) {
+bool Map::CheckAdjTileValid(Position pos, Direction dir) const {
     Position adjPos = pos;
     switch (dir) {
         case Direction::NONE:
@@ -92,8 +92,7 @@ bool Map::CheckAdjTileValid(Position pos, Direction dir) {
 }
 
 /* using distance formula to find the nearest tile of a certain type */
-Position Map::FindNearest(Position pos, Type type) {
-    qDebug() << "Made it to FindNearest";
+Position Map::FindNearest(Position pos, Type type) const {
     int min_dist = INT_MAX;
     Position closest_pos(-1,-1);
     for (auto& t : tiles_) {
@@ -105,6 +104,5 @@ Position Map::FindNearest(Position pos, Type type) {
             }
         }
     }
-    qDebug() << "Found Nearest Tile of type";
     return closest_pos;
 }
