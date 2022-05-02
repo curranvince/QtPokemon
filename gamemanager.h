@@ -26,7 +26,7 @@ private:
     std::pair<Position, Pokemon*>* CheckForWild(Position pos);
 
     void StartBattle(std::pair<Position, Pokemon*>* pair);
-    void StartBattle(Trainer* trainer);
+    void StartBattle(Trainer *trainer);
 
     void RunPokeCenter();
 
@@ -39,7 +39,7 @@ public:
     CombatWindow* GetCombatWindow() const { return combatWindow_; }
 
     bool CheckTileValidity(Position pos, Direction dir) const { return map_->CheckAdjTileValid(pos, dir); }
-    void MovePlayer(Direction dir);
+    void MovePlayer(Direction &dir);
 
 
 public slots:

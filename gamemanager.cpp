@@ -35,7 +35,7 @@ GameManager::GameManager() : currentBattlePos_(Position(-1, -1))
 
 GameManager::~GameManager() {}
 
-void GameManager::MovePlayer(Direction dir) {
+void GameManager::MovePlayer(Direction &dir) {
     /* move the player */
     if  (CheckTileValidity(player_->GetPosition(), dir)) {
         player_->Move(dir);
@@ -107,6 +107,7 @@ void GameManager::CombatOver_slot(bool won) {
         }
     } else {
         /* teleport to nearest poke center */
+        qDebug() << "going to poke center";
         player_->Move(map_->FindNearest(player_->GetPosition(), Type::kPokeCenter));
         RunPokeCenter();
     }

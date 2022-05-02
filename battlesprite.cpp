@@ -32,9 +32,9 @@ QRectF BattleSprite::boundingRect() const {
 
 void BattleSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) {
     if (kPlayer) {
-        painter->drawPixmap(140, 180, *kSpriteImage, offsetX_, offsetY_, kSpriteSize-1, kSpriteSize-1);
+        painter->drawPixmap(140, 180, *kSpriteImage, offsetX_, offsetY_, kSpriteSize, kSpriteSize);
     } else {
-        painter->drawPixmap(420, 15, *kSpriteImage, offsetX_, offsetY_, kSpriteSize-1, kSpriteSize-1);
+        painter->drawPixmap(420, 15, *kSpriteImage, offsetX_, offsetY_, kSpriteSize, kSpriteSize);
     }
 
     Q_UNUSED(widget);

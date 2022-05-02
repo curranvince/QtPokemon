@@ -115,15 +115,37 @@ void MainWindow::UpdatePartyMenu() {
     std::vector<Pokemon*> party = gameManager_->GetPlayer()->GetParty();
 
     ui_->name1->setText(QString::fromStdString(party.at(0)->GetName()));
-    std::string hpStr = "HP: " + std::to_string(party.at(0)->GetHP()) + " / " + std::to_string(party.at(0)->GetMaxHP());
+    std::string hpStr = "HP: " + std::to_string((int)party.at(0)->GetHP()) + " / " + std::to_string((int)party.at(0)->GetMaxHP());
     ui_->hp1->setText(QString::fromStdString(hpStr));
     ui_->lvl1->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(0)->GetLevel())));
 
+    /*
+    QLabel* names[5] = { ui_->name2, ui_->name3, ui_->name4, ui_->name5, ui_->name6 };
+    QLabel* hps[5] = { ui_->hp2, ui_->hp3, ui_->hp4, ui_->hp5, ui_->hp6 };
+    QLabel* lvls[5] = { ui_->lvl2, ui_->lvl3, ui_->lvl4, ui_->lvl5, ui_->lvl6 };
+    QPushButton* actives[5] = { ui_->active2, ui_->active3, ui_->active4, ui_->active5, ui_->active6 };
+
+    for (unsigned int i = 1; i <= 6; i++) {
+        if (party.size() > i) {
+            names[i-1]->setText(QString::fromStdString(party.at(i)->GetName()));
+            hpStr = "HP: " + std::to_string(party.at(i)->GetHP()) + " / " + std::to_string(party.at(i)->GetMaxHP());
+            hps[i-1]->setText(QString::fromStdString(hpStr));
+            lvls[i-1]->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(i)->GetLevel())));
+            actives[i-1]->setVisible(true);
+        } else {
+            names[i-1]->setText("");
+            hps[i-1]->setText("");
+            lvls[i-1]->setText("");
+            actives[i-1]->setVisible(false);
+        }
+    }
+    */
+
     if (party.size() > 1) {
         ui_->name2->setText(QString::fromStdString(party.at(1)->GetName()));
-        hpStr = "HP: " + std::to_string(party.at(1)->GetHP()) + " / " + std::to_string(party.at(1)->GetMaxHP());
+        hpStr = "HP: " + std::to_string((int)party.at(1)->GetHP()) + " / " + std::to_string((int)party.at(1)->GetMaxHP());
         ui_->hp2->setText(QString::fromStdString(hpStr));
-        ui_->lvl2->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(0)->GetLevel())));
+        ui_->lvl2->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(1)->GetLevel())));
         ui_->active2->setVisible(true);
     } else {
         ui_->name2->setText("");
@@ -134,7 +156,7 @@ void MainWindow::UpdatePartyMenu() {
 
     if (party.size() > 2) {
         ui_->name3->setText(QString::fromStdString(party.at(2)->GetName()));
-        hpStr = "HP: " + std::to_string(party.at(2)->GetHP()) + " / " + std::to_string(party.at(2)->GetMaxHP());
+        hpStr = "HP: " + std::to_string((int)party.at(2)->GetHP()) + " / " + std::to_string((int)party.at(2)->GetMaxHP());
         ui_->hp3->setText(QString::fromStdString(hpStr));
         ui_->lvl3->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(2)->GetLevel())));
         ui_->active3->setVisible(true);
@@ -147,7 +169,7 @@ void MainWindow::UpdatePartyMenu() {
 
     if (party.size() > 3) {
         ui_->name4->setText(QString::fromStdString(party.at(3)->GetName()));
-        hpStr = "HP: " + std::to_string(party.at(3)->GetHP()) + " / " + std::to_string(party.at(3)->GetMaxHP());
+        hpStr = "HP: " + std::to_string((int)party.at(3)->GetHP()) + " / " + std::to_string((int)party.at(3)->GetMaxHP());
         ui_->hp4->setText(QString::fromStdString(hpStr));
         ui_->lvl4->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(3)->GetLevel())));
         ui_->active4->setVisible(true);
@@ -160,7 +182,7 @@ void MainWindow::UpdatePartyMenu() {
 
     if (party.size() > 4) {
         ui_->name5->setText(QString::fromStdString(party.at(4)->GetName()));
-        hpStr = "HP: " + std::to_string(party.at(4)->GetHP()) + " / " + std::to_string(party.at(4)->GetMaxHP());
+        hpStr = "HP: " + std::to_string((int)party.at(4)->GetHP()) + " / " + std::to_string((int)party.at(4)->GetMaxHP());
         ui_->hp5->setText(QString::fromStdString(hpStr));
         ui_->lvl5->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(4)->GetLevel())));
         ui_->active5->setVisible(true);
@@ -173,7 +195,7 @@ void MainWindow::UpdatePartyMenu() {
 
     if (party.size() > 5) {
         ui_->name6->setText(QString::fromStdString(party.at(5)->GetName()));
-        hpStr = "HP: " + std::to_string(party.at(5)->GetHP()) + " / " + std::to_string(party.at(5)->GetMaxHP());
+        hpStr = "HP: " + std::to_string((int)party.at(5)->GetHP()) + " / " + std::to_string((int)party.at(5)->GetMaxHP());
         ui_->hp6->setText(QString::fromStdString(hpStr));
         ui_->lvl6->setText(QString::fromStdString("Lvl: " + std::to_string(party.at(5)->GetLevel())));
         ui_->active6->setVisible(true);
@@ -183,6 +205,7 @@ void MainWindow::UpdatePartyMenu() {
         ui_->lvl6->setText("");
         ui_->active6->setVisible(false);
     }
+
 }
 
 void MainWindow::on_active2_clicked() {

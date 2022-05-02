@@ -19,6 +19,7 @@ enum class Type {
 class Tile : public QGraphicsObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Tile)
 
 private:
     static QPixmap *kSpriteImage;

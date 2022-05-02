@@ -14,6 +14,8 @@
 class BattleSprite : public QGraphicsObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(BattleSprite)
+
 private:
     static const int kSpriteSize;
     static QPixmap* kSpriteImage;

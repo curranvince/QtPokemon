@@ -64,7 +64,7 @@ bool CombatWindow::TryToCatch() {
     return caught;
 }
 
-void CombatWindow::SetOpponent(Pokemon* pokemon) {
+void CombatWindow::SetOpponent(Pokemon *pokemon) {
     activeOpponent_ = pokemon;
     battleType_ = BattleType::kWild;
     Setup();
@@ -81,6 +81,7 @@ void CombatWindow::UpdateDialogue() {
     QEventLoop loop;
     connect(writeTimer_, SIGNAL(timeout()), &loop, SLOT(quit()));
     writeTimer_->start(55);
+
     for (unsigned int i = 0; i < dialogue_.size(); i++) {
         loop.exec();
         currentDialogue_.push_back(dialogue_.at(i));
@@ -97,12 +98,12 @@ void CombatWindow::UpdateHealthBars() {
                 QString::fromStdString(
                     player_->GetActive()->GetName()
                     + ":\nLvl: " + std::to_string(player_->GetActive()->GetLevel())
-                    + "    HP: " + std::to_string((int)std::ceil(player_->GetActive()->GetHP())) + " / " +  std::to_string(player_->GetActive()->GetMaxHP())));
+                    + "    HP: " + std::to_string((int)std::ceil(player_->GetActive()->GetHP())) + " / " +  std::to_string((int)player_->GetActive()->GetMaxHP())));
     ui_->opponentActiveLabel->setText(
                 QString::fromStdString(
                     activeOpponent_->GetName()
                     + ":\nLvl: " + std::to_string(activeOpponent_->GetLevel())
-                    + "    HP: " + std::to_string((int)std::ceil(activeOpponent_->GetHP())) + " / " +  std::to_string(activeOpponent_->GetMaxHP())));
+                    + "    HP: " + std::to_string((int)std::ceil(activeOpponent_->GetHP())) + " / " +  std::to_string((int)activeOpponent_->GetMaxHP())));
 }
 
 bool CombatWindow::DoAttack(Pokemon* attacker, Pokemon* defender) {
@@ -110,16 +111,17 @@ bool CombatWindow::DoAttack(Pokemon* attacker, Pokemon* defender) {
     float dmg = attacker->GetAttackValue();
     dialogue_ = attacker->GetName() + " deals " + std::to_string((int)std::ceil(dmg)) + " damage " + " to " + defender->GetName() + "\n";
     defender->Damage(dmg);
-    bool death = defender->GetHP() <= 0;
+    UpdateDialogue();
+    UpdateHealthBars();
+    ClearDialogue();
+    bool death = (defender->GetHP() <= 0);
     if (death) {
-        dialogue_ += defender->GetName() + " has fainted!\n";
+        dialogue_ = defender->GetName() + " has fainted!\n";
         if (defender != player_->GetActive() && battleType_ == BattleType::kWild) {
             dialogue_ += defender->GetName() + " health will be restored, and they will be added to your party or pokedex";
         }
     }
-
     UpdateDialogue();
-    UpdateHealthBars();
 
     return death;
 }
@@ -188,10 +190,12 @@ void CombatWindow::on_attack1Button_clicked() {
         battleSprites[0]->DoAttackAnimation();
         dies = DoAttack(player_->GetActive(), activeOpponent_);
         if (dies) {
+            player_->GetActive()->LevelUp();
             HandleOpponentFaint(); // opponent death
         }
         if (!dies) battleSprites[1]->DoAttackAnimation();
         if (!dies && DoAttack(activeOpponent_, player_->GetActive())) {
+            activeOpponent_->LevelUp();
             HandlePlayerFaint();
         }
     } else {
@@ -199,10 +203,12 @@ void CombatWindow::on_attack1Button_clicked() {
         battleSprites[1]->DoAttackAnimation();
         dies = DoAttack(activeOpponent_, player_->GetActive());
         if (dies) {
+            activeOpponent_->LevelUp();
             HandlePlayerFaint();
         }
         if (!dies) battleSprites[0]->DoAttackAnimation();
         if (!dies && DoAttack(player_->GetActive(), activeOpponent_)) {
+            player_->GetActive()->LevelUp();
             HandleOpponentFaint();
         }
     }
@@ -220,6 +226,7 @@ void CombatWindow::on_pokeballButton_clicked() {
         if (TryToCatch()) {
             emit CombatOver(true);
         } else {
+            battleSprites[1]->DoAttackAnimation();
             DoAttack(activeOpponent_, player_->GetActive());
             ShowScreen(0);
         }
@@ -231,4 +238,5 @@ void CombatWindow::EnableButtons_slot() {
     ui_->fightButton->setEnabled(true);
     ui_->runButton->setEnabled(true);
     ui_->inventoryButton->setEnabled(true);
+    battleSprites[0]->ChangeImage(player_->GetActive()->GetID());
 }

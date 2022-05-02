@@ -13,6 +13,7 @@
 class Player : public QGraphicsObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(Player)
 
 private:
     const QPixmap *spriteImage_;
